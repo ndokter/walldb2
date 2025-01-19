@@ -1,0 +1,5 @@
+*.pyc
+*.sqlite3
+.vscode/
+backend/media
+notes.txt
