@@ -1,11 +1,9 @@
-from django.db import models
-from django.db import transaction
-
 import wdb_wallpaper.services.image
+from django.db import models, transaction
 
 
 class Wallpaper(models.Model):
-    # tags = models.ManyToManyField('Tag', null=True, blank=True)
+    tags = models.ManyToManyField('Tag', blank=True)
 
     image = models.ImageField(upload_to='wallpapers', null=True)
     image_format = models.CharField(max_length=4, help_text='e.g. png', blank=True)
@@ -14,9 +12,12 @@ class Wallpaper(models.Model):
     height = models.IntegerField(blank=True)
     aspect_ratio = models.CharField(max_length=6, help_text='e.g. 16:9', blank=True)
     # hash = models.CharField(unique=True, max_length=32, blank=True)
-    hash = models.CharField(max_length=32, blank=True)
+    hash = models.CharField(unique=True, max_length=32, blank=True)
 
     is_approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'<Wallpaper {self.image.name}>'
 
     def save(self, **kwargs):
         # Precalculate properties based on wallpaper image. Used for filtering etc.

@@ -2,9 +2,8 @@ import hashlib
 import math
 from io import BytesIO
 
-from PIL import Image
 from django.core.files.images import ImageFile
-
+from PIL import Image
 from wdb_wallpaper.services.exceptions import UnsupportedFileExtensionError
 
 

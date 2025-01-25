@@ -7,6 +7,8 @@ import wdb_wallpaper.services.wallpaper
 
 
 class WallpaperAdmin(admin.ModelAdmin):
+    exclude = ('tags',)
+
     def save_model(self, request, obj, form, change):
         if change:
             wdb_wallpaper.services.wallpaper.update(wallpaper=obj)
