@@ -14,13 +14,18 @@ class Wallpaper(models.Model):
     # hash = models.CharField(unique=True, max_length=32, blank=True)
     hash = models.CharField(unique=True, max_length=32, blank=True)
 
+    chromadb_description = models.TextField(
+        help_text="Description of image to make searchable with ChromaDB", 
+        null=True, 
+        blank=True)
+
     is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return f'<Wallpaper {self.image.name}>'
 
     def save(self, **kwargs):
-        # Precalculate properties based on wallpaper image. Used for filtering etc.
+        # Precalculate properties based on 'image'. Used for filtering etc.
         self.hash = wdb_wallpaper.services.image.calculate_md5_hash(image_file=self.image)
         self.width, self.height = self.image.width, self.image.height
         self.aspect_ratio = wdb_wallpaper.services.image.calculate_aspect_ratio(

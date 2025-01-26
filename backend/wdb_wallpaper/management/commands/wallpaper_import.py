@@ -5,6 +5,11 @@ from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
+    """
+    Read folder from disk and import all images into Wallpaper model.
+
+    Duplicate files will fail on unique file hash constraint.
+    """
 
     def add_arguments(self, parser):
         parser.add_argument('source_folder', type=str, help='Folder containing wallpapers to import')

@@ -8,6 +8,9 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
+    """
+    Use ollama to generate tags/labels for all Wallpaper's that don't have any tags yet.
+    """
 
     def handle(self, *args, **kwargs):
         untagged_wallpapers = Wallpaper.objects.filter(tags__isnull=True)
