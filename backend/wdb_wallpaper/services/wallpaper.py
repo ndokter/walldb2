@@ -48,10 +48,19 @@ def import_file(full_path: str):
     create(image_file=simple_file)
 
 
-def auto_generate_tags(wallpaper):
+def set_ai_generated_tags(wallpaper):
     tags = wdb_wallpaper.services.tag.auto_generate_tags(image_file_path=wallpaper.image.path)
     
     wallpaper.tags.add(*tags)
     wallpaper.save()
 
-    logger.info('Saved auto generated %s for wallpaper %s', tags, wallpaper)
+    logger.info("Saved auto generated tags '%s' for wallpaper %s", tags, wallpaper)
+
+
+def set_ai_generated_description(wallpaper):
+    wallpaper.chromadb_description = wdb_wallpaper.services.ollama_.generate_description(
+        image_file_path=wallpaper.image.path
+    )
+    wallpaper.save()
+
+    logger.info("Saved auto generated description for wallpaper %s", wallpaper)

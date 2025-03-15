@@ -1,5 +1,5 @@
 import wdb_wallpaper.services.image
-from django.db import models, transaction
+from django.db import models
 
 
 class Wallpaper(models.Model):
@@ -11,13 +11,15 @@ class Wallpaper(models.Model):
     width = models.IntegerField(blank=True)
     height = models.IntegerField(blank=True)
     aspect_ratio = models.CharField(max_length=6, help_text='e.g. 16:9', blank=True)
-    # hash = models.CharField(unique=True, max_length=32, blank=True)
     hash = models.CharField(unique=True, max_length=32, blank=True)
 
     chromadb_description = models.TextField(
         help_text="Description of image to make searchable with ChromaDB", 
         null=True, 
         blank=True)
+    chromadb_description_added = models.BooleanField(
+        default=False, 
+        help_text="If added to ChromaDB")
 
     is_approved = models.BooleanField(default=False)
 
@@ -30,8 +32,7 @@ class Wallpaper(models.Model):
         self.width, self.height = self.image.width, self.image.height
         self.aspect_ratio = wdb_wallpaper.services.image.calculate_aspect_ratio(
             width=self.width, 
-            height=self.height
-        )
+            height=self.height)
         self.image_size = self.image.size
         self.image_format = wdb_wallpaper.services.image.get_format(image_file=self.image)
         self.image.name = f'w_{self.hash}.{self.image_format.lower()}'

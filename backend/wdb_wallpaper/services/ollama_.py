@@ -1,13 +1,20 @@
+import logging
 from typing import List
 
 from ollama import Client
+
+logger = logging.getLogger(__name__)
+
+OLLAMA_HOST = "http://localhost:11434"  # TODO settings/env var
 
 
 def generate_image_tags(image_file_path: str) -> List[str]:
     """
     :returns: ['Disneyland', 'Disney', 'Paris', 'France', 'theme park', 'attraction']
     """
-    client = Client(host='http://localhost:11434')  # TODO settings/env var
+    logger.info("Generating ollama tags for: %s", image_file_path)
+
+    client = Client(host=OLLAMA_HOST)  
     response = client.chat(
         model='llama3.2-vision:11b',
         messages=[{
@@ -24,3 +31,19 @@ def generate_image_tags(image_file_path: str) -> List[str]:
     tags = [tag.strip().lower() for tag in tags]
 
     return tags
+
+
+def generate_description(image_file_path: str) -> str:
+    logger.info("Generating ollama description for: %s", image_file_path)
+
+    client = Client(host=OLLAMA_HOST)
+    response = client.chat(
+        model='llama3.2-vision:11b',
+        messages=[{
+            'role': 'user',
+            'content': 'Describe this image in a maximum of 4 sentences',
+            'images': [image_file_path]
+        }]
+    )
+
+    return response.message.content

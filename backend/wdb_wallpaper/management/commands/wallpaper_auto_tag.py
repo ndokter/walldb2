@@ -18,4 +18,4 @@ class Command(BaseCommand):
         logger.info("Starting with auto tagging")
 
         for wallpaper in untagged_wallpapers:
-            wdb_wallpaper.services.wallpaper.auto_generate_tags(wallpaper=wallpaper)
+            wdb_wallpaper.services.wallpaper.set_ai_generated_tags(wallpaper=wallpaper)

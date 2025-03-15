@@ -3,3 +3,4 @@
 .vscode/
 backend/media
 notes.txt
+backend/wdb_wallpaper/management/commands/debug.py
