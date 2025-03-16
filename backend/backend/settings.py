@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'wdb_wallpaper',
     'wdb_user',
+    'wdb_frontend',
 ]
 
 MIDDLEWARE = [

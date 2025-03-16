@@ -1,0 +1,7 @@
+{% extends 'wdb_frontend/base.html' %}
+
+{% block content %}
+{% for wallpaper in object_list %}
+<div class="wallpaper"><img src="{{ wallpaper.thumbnail.image.url }}" /></div>
+{% endfor %}
+{% endblock content %}
