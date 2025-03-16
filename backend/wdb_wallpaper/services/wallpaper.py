@@ -10,6 +10,7 @@ import wdb_wallpaper.services.wallpaper
 from django.core.files.images import ImageFile
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import transaction
+from django.db.models import Case, When
 from PIL import Image
 from wdb_wallpaper.models import Wallpaper
 
@@ -52,6 +53,16 @@ def import_file(full_path: str):
     )
 
     create(image_file=simple_file)
+
+
+def search_by_ai_description(query):
+    wallpaper_id_keys = wdb_wallpaper.services.chromadb.search(query, max_results=50)
+
+    # Sort the queryset using the chromadb result keys because they indicate relevance
+    preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(wallpaper_id_keys)])
+    wallpapers = Wallpaper.objects.filter(pk__in=wallpaper_id_keys).order_by(preserved)
+    
+    return wallpapers
 
 
 def set_ai_generated_tags(wallpaper):

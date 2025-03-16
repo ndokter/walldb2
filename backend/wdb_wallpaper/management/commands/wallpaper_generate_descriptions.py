@@ -12,7 +12,7 @@ class Command(BaseCommand):
     Use ollama to generate tags/labels for all Wallpaper's that don't have any tags yet.
     """
     def handle(self, *args, **kwargs):
-        wallpapers_without_description = Wallpaper.objects.filter(chromadb_description__isnull=True)
+        wallpapers_without_description = Wallpaper.objects.all()#.filter(chromadb_description__isnull=True)
 
         logger.info("Starting with auto descriptions")
 

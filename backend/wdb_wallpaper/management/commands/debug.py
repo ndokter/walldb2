@@ -1,4 +1,6 @@
+import wdb_wallpaper.services.chromadb
 import wdb_wallpaper.services.ollama_
+import wdb_wallpaper.services.wallpaper
 from django.core.management.base import BaseCommand
 from wdb_wallpaper.models import Wallpaper
 
@@ -6,17 +8,20 @@ from wdb_wallpaper.models import Wallpaper
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
+        self.readd_chromadb()
+
+
         # w = Wallpaper.objects.first()
 
         # wdb_wallpaper.services.ollama_.generate_description(image_file_path=w.image.path)
 
-        import chromadb
-        from chromadb.api.types import Documents, IDs
-        from chromadb.config import Settings
+        # import chromadb
+        # from chromadb.api.types import Documents, IDs
+        # from chromadb.config import Settings
 
-        # Create a ChromaDB client in in-memory mode
-        chroma_client = chromadb.PersistentClient()
-        collection = chroma_client.get_or_create_collection(name="wallpaper_descriptions")
+        # # Create a ChromaDB client in in-memory mode
+        # chroma_client = chromadb.PersistentClient()
+        # collection = chroma_client.get_or_create_collection(name="wallpaper_descriptions")
 
         # # Define some documents and their IDs
         # documents: Documents = [
@@ -34,16 +39,23 @@ class Command(BaseCommand):
         # )
 
         # Perform a semantic search
-        query = "holiday festive banana"
-        results = collection.query(
-            query_texts=[query],
-            n_results=3
-        )
+        # query = "holiday festive banana"
+        # results = collection.query(
+        #     query_texts=[query],
+        #     n_results=3
+        # )
 
-        # Print the results
-        from pprint import pprint
-        pprint(results)
-        print("Query:", query)
-        print("Results:")
-        for result in results['documents'][0]:
-            print("-", result)
+        # # Print the results
+        # from pprint import pprint
+        # pprint(results)
+        # print("Query:", query)
+        # print("Results:")
+        # for result in results['documents'][0]:
+        #     print("-", result)
+
+    def readd_chromadb(self):
+        for wallpaper in Wallpaper.objects.all():
+            wdb_wallpaper.services.chromadb.add_description(
+                key=str(wallpaper.id), 
+                description=wallpaper.chromadb_description
+            )
