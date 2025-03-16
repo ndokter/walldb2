@@ -16,6 +16,6 @@ class Command(BaseCommand):
         untagged_wallpapers = Wallpaper.objects.filter(tags__isnull=True)
 
         logger.info("Starting with auto tagging")
-
+        
         for wallpaper in untagged_wallpapers:
             wdb_wallpaper.services.wallpaper.set_ai_generated_tags(wallpaper=wallpaper)

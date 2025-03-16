@@ -17,9 +17,6 @@ class Wallpaper(models.Model):
         help_text="Description of image to make searchable with ChromaDB", 
         null=True, 
         blank=True)
-    chromadb_description_added = models.BooleanField(
-        default=False, 
-        help_text="If added to ChromaDB")
 
     is_approved = models.BooleanField(default=False)
 

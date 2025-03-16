@@ -1,11 +1,10 @@
 import logging
 from typing import List
 
+from django.conf import settings
 from ollama import Client
 
 logger = logging.getLogger(__name__)
-
-OLLAMA_HOST = "http://localhost:11434"  # TODO settings/env var
 
 
 def generate_image_tags(image_file_path: str) -> List[str]:
@@ -14,7 +13,7 @@ def generate_image_tags(image_file_path: str) -> List[str]:
     """
     logger.info("Generating ollama tags for: %s", image_file_path)
 
-    client = Client(host=OLLAMA_HOST)  
+    client = Client(host=settings.OLLAMA_HOST)  
     response = client.chat(
         model='llama3.2-vision:11b',
         messages=[{
@@ -36,7 +35,7 @@ def generate_image_tags(image_file_path: str) -> List[str]:
 def generate_description(image_file_path: str) -> str:
     logger.info("Generating ollama description for: %s", image_file_path)
 
-    client = Client(host=OLLAMA_HOST)
+    client = Client(host=settings.OLLAMA_HOST)
     response = client.chat(
         model='llama3.2-vision:11b',
         messages=[{

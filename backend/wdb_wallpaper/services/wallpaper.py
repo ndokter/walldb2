@@ -2,6 +2,7 @@ import io
 import logging
 import os
 
+import wdb_wallpaper.services.chromadb
 import wdb_wallpaper.services.ollama_
 import wdb_wallpaper.services.tag
 import wdb_wallpaper.services.thumbnail
@@ -17,13 +18,18 @@ logger = logging.getLogger(__name__)
 
 @transaction.atomic()
 def create(image_file: ImageFile):
-    """ Create new Wallpaper and generate Thumbnail for it """
-
+    """
+    Create new Wallpaper and generate Thumbnail for it
+    
+    Note: does not generate ai tags and descriptions. These are done 
+    occassionally using a stronger machine running ollama
+    """
+    
     wallpaper = Wallpaper.objects.create(image=image_file)
     wdb_wallpaper.services.thumbnail.create(wallpaper=wallpaper)
-
+    
     logger.debug("Created %s", wallpaper)
- 
+    
     return wallpaper
 
 
@@ -58,9 +64,16 @@ def set_ai_generated_tags(wallpaper):
 
 
 def set_ai_generated_description(wallpaper):
-    wallpaper.chromadb_description = wdb_wallpaper.services.ollama_.generate_description(
+    wallpaper_description = wdb_wallpaper.services.ollama_.generate_description(
         image_file_path=wallpaper.image.path
     )
+
+    wdb_wallpaper.services.chromadb.add_description(
+        key=str(wallpaper.id), 
+        description=wallpaper_description
+    )
+
+    wallpaper.chromadb_description = wallpaper_description
     wallpaper.save()
 
     logger.info("Saved auto generated description for wallpaper %s", wallpaper)

@@ -10,4 +10,4 @@ def auto_generate_tags(image_file_path: str) -> List[Tag]:
     return [
         Tag.objects.get_or_create(name=ollama_tag, defaults={'auto_generated': True})[0]
         for ollama_tag in ollama_tags
-    ]
+    ] 
