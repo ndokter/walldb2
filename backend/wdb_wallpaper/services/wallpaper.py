@@ -25,7 +25,6 @@ def create(image_file: ImageFile):
     Note: does not generate ai tags and descriptions. These are done 
     occassionally using a stronger machine running ollama
     """
-    
     wallpaper = Wallpaper.objects.create(image=image_file)
     wdb_wallpaper.services.thumbnail.create(wallpaper=wallpaper)
     
@@ -55,8 +54,8 @@ def import_file(full_path: str):
     create(image_file=simple_file)
 
 
-def search_by_ai_description(query):
-    wallpaper_id_keys = wdb_wallpaper.services.chromadb.search(query, max_results=50)
+def search_by_ai_description(query, max_results=50):
+    wallpaper_id_keys = wdb_wallpaper.services.chromadb.search(query, max_results=max_results)
 
     # Sort the queryset using the chromadb result keys because they indicate relevance
     preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(wallpaper_id_keys)])

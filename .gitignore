@@ -2,5 +2,7 @@
 *.sqlite3
 .vscode/
 backend/media
+backend/chroma
 notes.txt
 backend/wdb_wallpaper/management/commands/debug.py
+.history/
