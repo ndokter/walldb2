@@ -1,15 +1,12 @@
 import wdb_wallpaper.services.wallpaper
-from django.db.models import Q
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from wdb_frontend.forms import WallpaperSearchForm
 from wdb_wallpaper.models.wallpaper import Wallpaper
 
 
-class IndexView(ListView):
-    model = Wallpaper
-    paginate_by = 30
-    template_name = 'wdb_frontend/index.html'
-
+class SearchMixin:
+    """ Add WallpaperSearchForm to views """
     def get_queryset(self):
         queryset = super().get_queryset()
         self.search_form = WallpaperSearchForm(self.request.GET)
@@ -22,3 +19,16 @@ class IndexView(ListView):
         context = super().get_context_data(**kwargs)
         context['search_form'] = WallpaperSearchForm(self.request.GET)
         return context
+
+
+class IndexView(SearchMixin, ListView):
+    model = Wallpaper
+    paginate_by = 30
+    template_name = 'wdb_frontend/wallpaper_list.html'
+    
+
+class WallpaperDetailView(SearchMixin, DetailView):
+    model = Wallpaper
+    template_name = 'wdb_frontend/wallpaper_detail.html'
+    slug_field = 'hash'
+    slug_url_kwarg = 'hash'

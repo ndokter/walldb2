@@ -1,0 +1,16 @@
+{% extends 'wdb_frontend/base.html' %}
+
+{% block content %}
+<div class="wallpaper-list-container">
+    {% for wallpaper in object_list %}
+    <div class="wallpaper">
+        <a href="{% url 'wallpaper-detail' hash=wallpaper.hash %}">
+            <img src="{{ wallpaper.thumbnail.image.url }}" />
+        </a>
+    </div>
+    {% empty %}
+    No results :(
+    {% endfor %}
+</div>
+
+{% endblock content %}

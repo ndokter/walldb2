@@ -1,0 +1,81 @@
+{% extends 'wdb_frontend/base.html' %}
+
+{% block content %}
+<!-- detail {{ object }} -->
+
+<div class="wallpaper-detail-container">
+    <div class="sidebar">
+        <div class="wallpaper-info-sidebar">
+            <h3 class="sidebar-title">Wallpaper details</h2>
+                <div class="sidebar-section">
+                    <!-- <h3>Details</h3> -->
+                    <table class="info-table">
+                        <tr>
+                            <td class="info-label">Dimensions:</td>
+                            <td class="info-value">{{ object.width }}×{{ object.height }}</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Aspect ratio:</td>
+                            <td class="info-value">{{ object.aspect_ratio }}</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Size:</td>
+                            <td class="info-value">{{ object.image_size|filesizeformat }}</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Format:</td>
+                            <td class="info-value">{{ object.image_format|upper }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="{{ object.image.url }}" download class="btn download-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Wallpaper
+                    </a>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>Tags</h4>
+                    <div class="tag-cloud">
+                        {% for tag in object.tags.all %}
+                        <span class="tag">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>AI Description</h4>
+                    <div class="description">
+                        {{ object.chromadb_description }}
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <img src="{{ object.image.url }}" />
+    </div>
+</div>
+{% endblock content %}
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.querySelector('.toggle-btn');
+        const descriptionBox = document.querySelector('.description-box');
+
+        // Collapse by default
+        descriptionBox.classList.add('collapsed');
+
+        toggleBtn.addEventListener('click', function () {
+            descriptionBox.classList.toggle('collapsed');
+            toggleBtn.textContent = descriptionBox.classList.contains('collapsed') ? '+' : '-';
+        });
+    });
+</script>
