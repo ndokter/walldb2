@@ -9,6 +9,8 @@ class Command(BaseCommand):
     Read folder from disk and import all images into Wallpaper model.
 
     Duplicate files will fail on unique file hash constraint.
+
+    ./manage.py wallpaper_import ~/wallpapers_to_import
     """
 
     def add_arguments(self, parser):
