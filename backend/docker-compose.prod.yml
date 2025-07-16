@@ -41,18 +41,6 @@ services:
       - redis
       - web
 
-  # nginx:
-  #   build: ./nginx
-  #   restart: always
-  #   ports:
-  #     - ${NGINX_PORT}:80
-  #   volumes:
-  #     - static_volume:/app/staticfiles
-  #     - media_volume:/app/mediafiles
-  #   depends_on:
-  #     - web
 
 volumes:
   postgres_data:
-  static_volume:
-  media_volume:
