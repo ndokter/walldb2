@@ -1,6 +1,7 @@
 *.pyc
 *.sqlite3
 .vscode/
+.env
 backend/media
 backend/chroma
 backend/wdb_wallpaper/management/commands/debug.py
