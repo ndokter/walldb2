@@ -2,9 +2,9 @@
 *.sqlite3
 .vscode/
 .env
-backend/media
+backend/mediafiles
+backend/staticfiles
 backend/chroma
 backend/wdb_wallpaper/management/commands/debug.py
-backend/staticfiles
 notes.txt
 .history/

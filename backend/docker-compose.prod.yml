@@ -10,8 +10,8 @@ services:
     expose:
       - 8000
     volumes:
-      - static_volume:/app/staticfiles
-      - media_volume:/app/mediafiles
+      - ./staticfiles:/app/staticfiles
+      - ./mediafiles:/app/mediafiles
     depends_on:
       - redis
       - db
