@@ -1,0 +1,56 @@
+services:
+  web:
+    build: .
+    restart: always
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    env_file:
+      - ./.env
+    expose:
+      - 8000
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+    depends_on:
+      - redis
+      - db
+  db:
+    image: postgres:17
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+
+  redis:
+    image: redis:7
+
+  celery:
+    build: .
+    restart: always
+    command: celery -A config worker -l info
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis
+      - web
+
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - ${NGINX_PORT}:80
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
