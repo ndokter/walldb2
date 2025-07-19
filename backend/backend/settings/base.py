@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/app/mediafiles'
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = '/app/staticfiles'
 
 # Quick-start development settings - unsuitable for production
