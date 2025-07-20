@@ -10,8 +10,8 @@ services:
     expose:
       - 8000
     volumes:
-      - ./staticfiles:/app/staticfiles
-      - ./mediafiles:/app/mediafiles
+      - /var/www/walldb2/staticfiles:/app/staticfiles
+      - /var/www/walldb2/mediafiles:/app/mediafiles
     depends_on:
       - redis
       - db
