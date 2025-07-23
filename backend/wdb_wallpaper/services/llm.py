@@ -65,7 +65,12 @@ def generate_image_tags(provider:str, image_file_path: str) -> List[str]:
         )
 
         response.raise_for_status()
-        return response.json()["choices"][0]["message"]["content"]
+        tags = response.json()["choices"][0]["message"]["content"]
+    
+        tags = tags.split(',')
+        tags = [tag.strip().lower() for tag in tags]
+
+        return tags
 
 
 def generate_description(provider: str, image_file_path: str) -> str:
@@ -102,7 +107,7 @@ def generate_description(provider: str, image_file_path: str) -> str:
                             },
                             {
                                 "type": "text",
-                                "text": "Generate description of this image in a maximum of 4 sentences. Dont say anything else."
+                                "text": "Generate a paragraph of search terms that describes the image in both contents and atmosphere and show me the paragraph only"
                             }
                         ]
                     }
@@ -117,14 +122,13 @@ def generate_description(provider: str, image_file_path: str) -> str:
 def _encode_image_to_base64_url(image_path: str) -> str:
     """
     Encodes a local image file into a Base64 data URI.
-    This is required by most vision APIs, regardless of the SDK.
+    This is required used to send image to OpenAI compatible vision APIs.
     """
-    # Guess the MIME type of the image
+    # Guess MIME type
     mime_type, _ = mimetypes.guess_type(image_path)
     if not mime_type or not mime_type.startswith('image'):
         raise ValueError(f"Could not determine image type for {image_path}")
 
-    # Read the image in binary mode and encode it
     with open(image_path, "rb") as image_file:
         base64_encoded_data = base64.b64encode(image_file.read()).decode('utf-8')
 

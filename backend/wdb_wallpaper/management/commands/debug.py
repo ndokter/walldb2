@@ -7,6 +7,13 @@ from wdb_wallpaper.models import Wallpaper
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
+        # tags = wdb_wallpaper.services.llm.generate_image_tags(
+        #     provider='deepinfra',
+        #     image_file_path='Wallpaper/1920_1200_Anno_1800_Botanica_wallpaper.jpg'
+        # )
+        # print(tags)
+
+
         description = wdb_wallpaper.services.llm.generate_description(
             provider='deepinfra',
             image_file_path='Wallpaper/1920_1200_Anno_1800_Botanica_wallpaper.jpg'

@@ -13,6 +13,8 @@ from django.db import transaction
 from django.db.models import Case, When
 from PIL import Image
 from wdb_wallpaper.models import Wallpaper
+from wdb_wallpaper.tasks import (wallpaper_generate_description_task,
+                                 wallpaper_generate_tags_task)
 
 logger = logging.getLogger(__name__)
 
@@ -20,16 +22,19 @@ logger = logging.getLogger(__name__)
 @transaction.atomic()
 def create(image_file: ImageFile):
     """
-    Create new Wallpaper and generate Thumbnail for it
-    
-    Note: does not generate ai tags and descriptions. These are done 
-    occassionally using a stronger machine running ollama
+    Create new Wallpaper and:
+    - generate Thumbnail for it
+    - generate AI tags
+    - generate AI description (similar to tags)
     """
     wallpaper = Wallpaper.objects.create(image=image_file)
     wdb_wallpaper.services.thumbnail.create(wallpaper=wallpaper)
     
     logger.debug("Created %s", wallpaper)
 
+    # Queue AI generated info tasks
+    wallpaper_generate_tags_task.delay(wallpaper.id)
+    wallpaper_generate_description_task.delay(wallpaper.id)
 
     return wallpaper
 
@@ -69,7 +74,6 @@ def set_ai_generated_tags(wallpaper):
     tags = wdb_wallpaper.services.tag.auto_generate_tags(image_file_path=wallpaper.image.path)
     
     wallpaper.tags.add(*tags)
-    wallpaper.save()
 
     logger.info("Saved auto generated tags '%s' for wallpaper %s", tags, wallpaper)
 
@@ -86,6 +90,6 @@ def set_ai_generated_description(wallpaper):
     )
 
     wallpaper.chromadb_description = wallpaper_description
-    wallpaper.save()
+    wallpaper.save(update_fields=['chromadb_description'])
 
     logger.info("Saved auto generated description for wallpaper %s", wallpaper)

@@ -8,3 +8,4 @@ backend/chroma
 backend/wdb_wallpaper/management/commands/debug.py
 notes.txt
 .history/
+Wallpaper
