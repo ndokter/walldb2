@@ -12,6 +12,7 @@ services:
     volumes:
       - /var/www/walldb2/staticfiles:/app/staticfiles
       - /var/www/walldb2/mediafiles:/app/mediafiles
+      - ./:/app
       - ./Wallpaper:/app/Wallpaper
     depends_on:
       - redis

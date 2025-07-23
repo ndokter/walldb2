@@ -3,7 +3,7 @@ import logging
 import os
 
 import wdb_wallpaper.services.chromadb
-import wdb_wallpaper.services.ollama_
+import wdb_wallpaper.services.llm
 import wdb_wallpaper.services.tag
 import wdb_wallpaper.services.thumbnail
 import wdb_wallpaper.services.wallpaper
@@ -29,7 +29,8 @@ def create(image_file: ImageFile):
     wdb_wallpaper.services.thumbnail.create(wallpaper=wallpaper)
     
     logger.debug("Created %s", wallpaper)
-    
+
+
     return wallpaper
 
 
@@ -74,7 +75,8 @@ def set_ai_generated_tags(wallpaper):
 
 
 def set_ai_generated_description(wallpaper):
-    wallpaper_description = wdb_wallpaper.services.ollama_.generate_description(
+    wallpaper_description = wdb_wallpaper.services.llm.generate_description(
+        provider='deepinfra',
         image_file_path=wallpaper.image.path
     )
 

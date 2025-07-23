@@ -3,6 +3,7 @@ services:
     build: .
     volumes:
       - .:/app
+      - ./Wallpaper:/app/Wallpaper
     ports:
       - "8000:8000"
     depends_on:

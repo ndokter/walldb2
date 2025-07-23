@@ -4,6 +4,7 @@ import mimetypes
 from typing import List
 
 import deepinfra
+import requests
 from django.conf import settings
 from ollama import Client
 
@@ -37,34 +38,34 @@ def generate_image_tags(provider:str, image_file_path: str) -> List[str]:
         return tags
 
     elif 'deepinfra':
-        client = deepinfra.Client()
-        
-        base64_image_url = _encode_image_to_base64_url(image_file_path)
-
-        response = client.chat.completions.create(
-            # Use a model on DeepInfra that supports vision, like LLaVA
-            model="llava-hf/llava-v1.6-mistral-7b-hf", 
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "text", 
-                            "text": 'List 6 relevant tags for this image with commas'
-                        },
-                        {
-                            "type": "image_url",
-                            "image_url": {"url": base64_image_url},
-                        },
-                    ],
-                }
-            ],
-            max_tokens=100,
+        response = requests.post(
+            settings.DEEPINFRA_API_URL, 
+            headers={
+                "Authorization": f"Bearer {settings.DEEPINFRA_API_KEY}",
+                "Content-Type":  "application/json",
+            }, 
+            json={
+                "model": 'google/gemma-3-12b-it',
+                "messages": [
+                    {
+                        "role":  "user",
+                        "content": [
+                            {
+                                "type": "image_url",
+                                "image_url": {"url": _encode_image_to_base64_url(image_file_path)}
+                            },
+                            {
+                                "type": "text",
+                                "text":  "List 6 relevant tags for this image with commas. Dont say anything else."
+                            }
+                        ]
+                    }
+                ]
+            }
         )
 
-        content = response.choices[0].message.content
-
-        return content
+        response.raise_for_status()
+        return response.json()["choices"][0]["message"]["content"]
 
 
 def generate_description(provider: str, image_file_path: str) -> str:
@@ -80,9 +81,37 @@ def generate_description(provider: str, image_file_path: str) -> str:
                 'images': [image_file_path]
             }]
         )
-
         return response.message.content
 
+    elif provider == 'deepinfra':
+        response = requests.post(
+            settings.DEEPINFRA_API_URL, 
+            headers={
+                "Authorization": f"Bearer {settings.DEEPINFRA_API_KEY}",
+                "Content-Type":  "application/json",
+            }, 
+            json={
+                "model": 'google/gemma-3-12b-it',
+                "messages": [
+                    {
+                        "role":  "user",
+                        "content": [
+                            {
+                                "type": "image_url",
+                                "image_url": {"url": _encode_image_to_base64_url(image_file_path)}
+                            },
+                            {
+                                "type": "text",
+                                "text": "Generate description of this image in a maximum of 4 sentences. Dont say anything else."
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+
+        response.raise_for_status()
+        return response.json()["choices"][0]["message"]["content"]
 
 
 def _encode_image_to_base64_url(image_path: str) -> str:

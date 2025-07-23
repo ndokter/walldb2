@@ -167,6 +167,8 @@ LOGGING = {
 }
 
 OLLAMA_HOST = "http://127.0.0.1:11434"
+DEEPINFRA_API_URL = 'https://api.deepinfra.com/v1/openai/chat/completions'
+DEEPINFRA_API_KEY = os.environ.get("DEEPINFRA_API_KEY")
 
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = os.environ.get("REDIS_BACKEND")

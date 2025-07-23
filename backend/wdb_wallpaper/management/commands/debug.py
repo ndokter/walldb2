@@ -1,5 +1,4 @@
 import wdb_wallpaper.services.chromadb
-import wdb_wallpaper.services.ollama_
 import wdb_wallpaper.services.wallpaper
 from django.core.management.base import BaseCommand
 from wdb_wallpaper.models import Wallpaper
@@ -8,10 +7,11 @@ from wdb_wallpaper.models import Wallpaper
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
-        wdb_wallpaper.services.llm.generate_image_tags(
+        description = wdb_wallpaper.services.llm.generate_description(
             provider='deepinfra',
-            image_file_path='Wallpaper/w_a92c9ac3524edffcd70264d8eab1190158e445a2.jpeg'
+            image_file_path='Wallpaper/1920_1200_Anno_1800_Botanica_wallpaper.jpg'
         )
+        print(description)
 
 
         # self.readd_chromadb()
