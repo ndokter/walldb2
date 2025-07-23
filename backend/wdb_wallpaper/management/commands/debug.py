@@ -8,7 +8,13 @@ from wdb_wallpaper.models import Wallpaper
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
-        self.readd_chromadb()
+        wdb_wallpaper.services.llm.generate_image_tags(
+            provider='deepinfra',
+            image_file_path='Wallpaper/w_a92c9ac3524edffcd70264d8eab1190158e445a2.jpeg'
+        )
+
+
+        # self.readd_chromadb()
 
 
         # w = Wallpaper.objects.first()
