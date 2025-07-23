@@ -15,7 +15,8 @@ services:
     depends_on:
       - redis
       - db
-  db:
+  
+db:
     image: postgres:17
     restart: always
     volumes:

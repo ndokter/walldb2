@@ -15,7 +15,7 @@ def generate_image_tags(image_file_path: str) -> List[str]:
 
     client = Client(host=settings.OLLAMA_HOST)  
     response = client.chat(
-        model='llama3.2-vision:11b',
+            model='gemma3:4b',
         messages=[{
             'role': 'user',
             'content': 'List 6 relevant tags for this image with commas',
