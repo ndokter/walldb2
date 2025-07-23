@@ -59,9 +59,9 @@ class Command(BaseCommand):
         # for result in results['documents'][0]:
         #     print("-", result)
 
-    def readd_chromadb(self):
-        for wallpaper in Wallpaper.objects.all():
-            wdb_wallpaper.services.chromadb.add_description(
-                key=str(wallpaper.id), 
-                description=wallpaper.chromadb_description
-            )
+    # def readd_chromadb(self):
+    #     for wallpaper in Wallpaper.objects.all():
+    #         wdb_wallpaper.services.chromadb.add_description(
+    #             key=str(wallpaper.id), 
+    #             description=wallpaper.chromadb_description
+    #         )
