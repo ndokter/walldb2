@@ -56,7 +56,7 @@ def generate_image_tags(provider:str, image_file_path: str) -> List[str]:
                             },
                             {
                                 "type": "text",
-                                "text":  "List 6 relevant tags for this image with commas. Dont say anything else."
+                                "text":  "List 8 relevant tags for this image with commas. Dont say anything else."
                             }
                         ]
                     }
@@ -107,7 +107,7 @@ def generate_description(provider: str, image_file_path: str) -> str:
                             },
                             {
                                 "type": "text",
-                                "text": "Generate a paragraph of search terms that describes the image in both contents and atmosphere and show me the paragraph only"
+                                "text": "Generate a paragraph of search terms that describes the image in both contents, style, color use and atmosphere and show me the paragraph only"
                             }
                         ]
                     }

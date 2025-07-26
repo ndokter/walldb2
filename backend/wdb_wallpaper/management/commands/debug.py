@@ -14,11 +14,11 @@ class Command(BaseCommand):
         # print(tags)
 
 
-        # description = wdb_wallpaper.services.llm.generate_description(
-        #     provider='deepinfra',
-        #     image_file_path='Wallpaper/1920_1200_Anno_1800_Botanica_wallpaper.jpg'
-        # )
-        # print(description)
+        description = wdb_wallpaper.services.llm.generate_description(
+            provider='deepinfra',
+            image_file_path='Wallpaper/1920_1200_Anno_1800_Botanica_wallpaper.jpg'
+        )
+        print(description)
 
 
         # self.readd_chromadb()
