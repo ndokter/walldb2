@@ -23,7 +23,7 @@ class SearchMixin:
 
 class IndexView(SearchMixin, ListView):
     model = Wallpaper
-    paginate_by = 30
+    paginate_by = 100
     template_name = 'wdb_frontend/wallpaper_list.html'
     
 
