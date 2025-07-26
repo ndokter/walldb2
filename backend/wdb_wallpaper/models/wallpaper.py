@@ -12,7 +12,7 @@ class Wallpaper(models.Model):
     image_size = models.IntegerField(help_text='size in bytes', blank=True)
     width = models.IntegerField(blank=True)
     height = models.IntegerField(blank=True)
-    aspect_ratio = models.CharField(max_length=6, help_text='e.g. 16:9', blank=True)
+    aspect_ratio = models.CharField(max_length=10, help_text='e.g. 16:9', blank=True)
     hash = models.CharField(unique=True, max_length=32, blank=True)
 
     chromadb_description = models.TextField(
