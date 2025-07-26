@@ -35,7 +35,8 @@ def search(query, max_results: int = 50):
     )
 
     # Lower (more strict) for short queries
-    threshold = 0.8 if len(query.split()) > 1 else 0.7
+    # threshold = 0.8 if len(query.split()) > 1 else 0.7
+    threshold = 0.8
 
     from pprint import pprint as pp; pp(results)
     filtered_keys = [
