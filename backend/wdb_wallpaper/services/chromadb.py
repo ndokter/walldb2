@@ -12,6 +12,15 @@ def add_description(key, description):
     collection.add(documents=[description], ids=[key])
     
 
+def remove_key(key):
+    chroma_client = chromadb.PersistentClient()
+    collection = chroma_client.get_or_create_collection(
+        name="wallpaper_descriptions", 
+        metadata={"hnsw:space": "cosine"}
+    )
+    collection.delete(ids=[key])  
+
+
 def search(query, max_results: int = 50):
     chroma_client = chromadb.PersistentClient()
     collection = chroma_client.get_or_create_collection(

@@ -45,6 +45,10 @@ def update(wallpaper):
     return wallpaper
 
 
+def delete(wallpaper):
+    wdb_wallpaper.services.chromadb.remove_key(key=str(wallpaper.id))
+
+
 def import_file(full_path: str):
     with Image.open(full_path) as img:
         img_bytes_array = io.BytesIO()

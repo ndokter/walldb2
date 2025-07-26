@@ -1,5 +1,7 @@
 import wdb_wallpaper.services.image
 from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 
 class Wallpaper(models.Model):
@@ -35,3 +37,9 @@ class Wallpaper(models.Model):
         self.image.name = f'w_{self.hash}.{self.image_format.lower()}'
 
         return super().save(**kwargs)
+    
+
+@receiver(pre_delete, sender='wdb_wallpaper.Wallpaper')
+def wallpaper_pre_delete(sender, instance, **kwargs):
+    import wdb_wallpaper.services.wallpaper
+    wdb_wallpaper.services.wallpaper.delete(wallpaper=instance)
