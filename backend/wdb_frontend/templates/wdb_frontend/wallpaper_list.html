@@ -13,21 +13,27 @@
     {% endfor %}
 </div>
 
-<!-- Placeholder pagination implementation -->
 {% if is_paginated %}
-<div style="display: flex; justify-content: center; margin-top: 20px; gap: 10px; flex-wrap: wrap;">
-    {% for num in page_obj.paginator.page_range %}
-    {% if page_obj.number == num %}
-    <strong style="padding: 5px 10px; background-color: #4cae4c; color: white; border-radius: 3px;">{{ num }}</strong>
-    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <a
-        href="?page={{ num }}&q={{ search_form.q.value|default:'' }}"
-        style="padding: 5px 10px; text-decoration: none; border: 1px solid #ddd; border-radius: 3px;">{{ num }}</a>
-        {% endif %}
+<div class="pagination-container">
+    <div class="pagination">
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == 1 or num == page_obj.paginator.num_pages %}
+                {% if num == page_obj.number %}
+                    <span class="current-page">{{ num }}</span>
+                {% else %}
+                    <a href="?page={{ num }}&q={{ search_form.q.value|default:'' }}" class="pagination-link">{{ num }}</a>
+                {% endif %}
+            {% elif num >= page_obj.number|add:'-2' and num <= page_obj.number|add:'2' %}
+                    {% if num == page_obj.number %}
+                        <span class="current-page">{{ num }}</span>
+                    {% else %}
+                        <a href="?page={{ num }}&q={{ search_form.q.value|default:'' }}" class="pagination-link">{{ num }}</a>
+                    {% endif %}
+            {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
+                    <span class="ellipsis">…</span>
+            {% endif %}
         {% endfor %}
-</div>
-
-<div style="text-align: center; margin-top: 10px; color: #666;">
-    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </div>
 </div>
 {% endif %}
 
