@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+    path('user/', include('wdb_user.urls', namespace='wdb_user')),
     path('', include('wdb_frontend.urls')),
     path('admin/', admin.site.urls),
 ]

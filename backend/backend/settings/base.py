@@ -58,6 +58,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'wdb_user.authentication_backends.EmailAuthenticationBackend',
+)
+
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
