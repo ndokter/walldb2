@@ -14,6 +14,7 @@ body {
 }
 
 nav {
+    color: #fff;
     background: #333;
     padding: 15px;
     display: flex;
@@ -27,15 +28,19 @@ nav {
 }
 
 nav a {
-    color: white;
+    color: #fff;
     text-decoration: none;
-    font-size: 1.2em;
     margin-right: 20px;
 }
-
-.search-form {
+nav .site-logo {
+    font-size: 1.5em
+}
+nav .search-form {
     display: flex;
     gap: 10px;
+}
+nav .login-section {
+    margin-left: 20px;
 }
 
 .search-form input[type="search"] {

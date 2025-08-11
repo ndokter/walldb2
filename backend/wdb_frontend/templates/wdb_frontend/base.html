@@ -14,18 +14,18 @@
 <body>
     <nav>
         <div class="nav-center-group">
-            <a href="/">WallDB</a>
+            <a class="site-logo" href="/">WallDB</a>
             <form class="search-form" method="GET" action="{% url 'index' %}">
                 {{search_form.q }}
                 <button type="submit" class="btn">Search</button>
             </form>
             <div class="login-section">
                 {% if user.is_authenticated %}
-                    <span>Welcome, {{ user }}</span>
-                    <a href="{% url 'user:logout' %}">Logout</a>
+                    <span>logged in as {{ user.username }}</span>
+                    <a href="{% url 'user:logout' %}">logout</a>
                 {% else %}
                     {# <a href="">Login</a> or #}
-                     <a href="{% url 'user:register' %}">Register</a>
+                    <a href="{% url 'user:register' %}">register</a>
                 {% endif %}
             </div>
         </div>
