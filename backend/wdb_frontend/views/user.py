@@ -31,9 +31,8 @@ class UserLoginView(UserAuthenticationBaseView):
         return context_data
 
     def form_valid(self, form):
-        print('logging in ', form.cleaned_data)
         auth.login(self.request, form.cleaned_data['user'])
-        print('logged in')
+
         return super(UserLoginView, self).form_valid(form)
 
 
@@ -66,5 +65,4 @@ class UserLogoutView(RedirectView):
     def get(self, request, *args, **kwargs):
         auth.logout(request)
 
-        return super(UserLogoutView, self)\
-            .get(request, *args, **kwargs)
+        return super(UserLogoutView, self).get(request, *args, **kwargs)

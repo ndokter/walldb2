@@ -15,7 +15,7 @@ body {
 
 nav {
     color: #fff;
-    background: #333;
+    background: #062b16;
     padding: 15px;
     display: flex;
     align-items: center;
@@ -33,7 +33,7 @@ nav a {
     margin-right: 20px;
 }
 nav .site-logo {
-    font-size: 1.5em
+    font-size: 1.3em
 }
 nav .search-form {
     display: flex;
@@ -41,6 +41,7 @@ nav .search-form {
 }
 nav .login-section {
     margin-left: 20px;
+    font-size: 0.8em;
 }
 
 .search-form input[type="search"] {
