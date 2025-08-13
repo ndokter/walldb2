@@ -13,6 +13,21 @@ body {
     min-height: 100vh;
 }
 
+/* Forms */
+input {
+    padding: 8px 12px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    outline: none;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 5px;
+    padding: 8px 16px;
+}
+
+
 nav {
     color: #fff;
     background: #062b16;
@@ -21,56 +36,51 @@ nav {
     align-items: center;
     justify-content: center;
 }
+    .nav-center-group {
+        display: flex;
+        align-items: center;
+    }
+    nav a {
+        color: #fff;
+        margin-right: 20px;
+    }
+    nav .site-logo {
+        font-size: 1.3em;
+        text-decoration: none;
+    }
+    nav .search-form {
+        display: flex;
+        gap: 10px;
+    }
+    nav .login-section {
+        margin-left: 20px;
+        font-size: 0.8em;
+    }
 
-.nav-center-group {
-    display: flex;
-    align-items: center;
-}
+    .search-form input[type="search"] {
+        background-color: #444;
+        color: white;
+        width: 300px;
+    }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 20px;
-}
-nav .site-logo {
-    font-size: 1.3em
-}
-nav .search-form {
-    display: flex;
-    gap: 10px;
-}
-nav .login-section {
-    margin-left: 20px;
-    font-size: 0.8em;
-}
+    .search-form input[type="search"]::placeholder {
+        color: #bbb;
+    }
 
-.search-form input[type="search"] {
-    padding: 8px 12px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #444;
-    color: white;
-    outline: none;
-    width: 300px;
-}
+    .search-form button[type="submit"] {
+        background-color: #4cae4c;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.2s;
+    }
 
-.search-form input[type="search"]::placeholder {
-    color: #bbb;
-}
+    .search-form button[type="submit"]:hover {
+        background-color: #5cb85c;
+    }
 
-.search-form button[type="submit"] {
-    background-color: #4cae4c;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.2s;
-}
-
-.search-form button[type="submit"]:hover {
-    background-color: #5cb85c;
-}
-
+/* Wallpaper list */
 .wallpaper-list-container {
     flex: 1;
     padding: 20px;
@@ -101,12 +111,6 @@ nav .login-section {
 .wallpaper:hover {
     transform: scale(1.05);
     cursor: pointer;
-}
-
-/* Buttons */
-.btn {
-    border-radius: 5px;
-    padding: 8px 16px;
 }
 
 /* Tag cloud */
@@ -284,6 +288,10 @@ nav .login-section {
     margin-top: 40px;
 }
 
+.auth-container label {
+    display: block;
+}
+
 .auth-box {
     display: flex;
     background-color: white;
@@ -298,28 +306,33 @@ nav .login-section {
     flex: 1;
     padding: 30px;
 }
-
-.auth-section h2 {
-    margin-bottom: 20px;
-    font-size: 1.2em;
-    color: #333;
-}
-
-.auth-section form > * {
-    margin-bottom: 12px;
-}
-
-.auth-section .btn {
-    background-color: #4cae4c;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-size: 1em;
-    width: 100%;
-    transition: background-color 0.2s;
-}
-
-.auth-section .btn:hover {
-    background-color: #5cb85c;
-}
+    .auth-section:not(:last-child) {
+        border-right: solid 1px #eee;
+    }
+    .auth-section input {
+        width: 100%;
+    }
+    .auth-section button {
+        margin-top: 20px;
+    }
+    .auth-section h2 {
+        margin-bottom: 20px;
+        font-size: 1.2em;
+        color: #333;
+    }
+    .auth-section form > * {
+        margin-bottom: 12px;
+    }
+    .auth-section .btn {
+        background-color: #4cae4c;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-size: 1em;
+        width: 100%;
+        transition: background-color 0.2s;
+    }
+    .auth-section .btn:hover {
+        background-color: #5cb85c;
+    }
